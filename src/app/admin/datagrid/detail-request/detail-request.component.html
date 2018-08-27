@@ -18,7 +18,7 @@
   <clr-datagrid>
     <clr-dg-placeholder>ไม่มีข้อมูลการรับบริการ!</clr-dg-placeholder>
     <clr-dg-row *ngFor="let s of detail.services">
-      <clr-dg-cell>{{s.date_serve | toThaiDate}}</clr-dg-cell>
+      <clr-dg-cell>{{s.date_serv | toThaiDate}}</clr-dg-cell>
       <clr-dg-cell>Seq : {{s.seq}}</clr-dg-cell>
       <clr-dg-cell>{{s.clinic}}</clr-dg-cell>
       <clr-dg-cell>

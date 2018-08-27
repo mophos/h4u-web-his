@@ -102,7 +102,7 @@ export class HomeComponent implements OnInit {
     this.alertService.confirm('คุณต้องการที่จะอนุมัติ ใช่หรือไม่!')
       .then(async (result) => {
         if (result.value) {
-          const rs: any = await this.homeService.getService(w.hn, w.date_serve, w.request_id, w.uid);
+          const rs: any = await this.homeService.getService(w.hn, w.date_serv, w.request_id, w.uid);
           console.log(rs);
           if (rs.ok) {
             const rsS: any = await this.homeService.sendService(rs.rows);

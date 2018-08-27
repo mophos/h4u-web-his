@@ -9,7 +9,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class DetailRequestComponent implements OnInit {
 
-  // detail = [{ hn: '40701', name: { title_name: 'test', first_name: 'test', last_name: 'test' }, date_serve: '123', cid: '123' }];
+  // detail = [{ hn: '40701', name: { title_name: 'test', first_name: 'test', last_name: 'test' }, date_serv: '123', cid: '123' }];
   detail: any = {};
   @Input() details: any;
   hcode: any = '';
