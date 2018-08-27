@@ -1,0 +1,36 @@
+<clr-main-container>
+  <clr-header class="header-5">
+    <div class="branding">
+      <a routerLink="/admin" class="nav-link">
+        <img src="./assets/img/logo_moph.png" alt="logo" class="logo-moph">
+        <span class="title">ระบบ Health For You (H4U) สำหรับจัดการบัญชีผู้ใช้งาน</span>
+      </a>
+    </div>
+    <div class="header-actions">
+      <clr-dropdown>
+        <button class="nav-text" clrDropdownTrigger>
+          {{fullname}}
+          <clr-icon shape="caret down"></clr-icon>
+        </button>
+        <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+          <a href="javascript://" clrDropdownItem (click)="logout()">ออกจากระบบ</a>
+        </clr-dropdown-menu>
+      </clr-dropdown>
+
+    </div>
+
+  </clr-header>
+  <div class="content-container">
+    <div class="content-area">
+      <router-outlet></router-outlet>
+    </div>
+
+    <clr-vertical-nav [clrVerticalNavCollapsible]="true" [(clrVerticalNavCollapsed)]="collapsed" [clr-nav-level]="1">
+      <a clrVerticalNavLink routerLink="/manager/officer" routerLinkActive="active">
+        <clr-icon clrVerticalNavIcon shape="users"></clr-icon>
+        รายชื่อเจ้าหน้าที่
+      </a>
+    </clr-vertical-nav>
+
+  </div>
+</clr-main-container>

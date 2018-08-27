@@ -1,0 +1,130 @@
+<div class="card">
+  <div class="card-block">
+      <div class="card-header">
+          รายชื่อเจ้าหน้าที่ที่เข้าร่วมโครงการ Health for You (H4U)
+      </div>
+      <div class="card-title">
+          <div class="row" style="margin-top: 3%;">
+              <div class="col-md-4" style="text-align: right;">ค้นหา</div>
+              <div class=" col-md-4">
+                  <input type="text" style="border: 1px solid #000;
+                border-radius: .125rem;
+                padding: .3rem .5rem;
+                width: 100%;
+                height: 1.5rem;
+                background-color: #17242b" (keyup)="enterSearch($event)" name="query" [(ngModel)]="query">
+              </div>
+          </div>
+      </div>
+      <div class="card-text">
+          <div class="row">
+              <div class="col-md-2 push-md-10" style="padding-top: 5px;">
+                  <div class="select">
+                      <select [(ngModel)]="filterStatus" (change)="changeFilterStatus()">
+                          <option value="W">รอการอนุมัติ</option>
+                          <option value="Y">ใช้งาน</option>
+                          <option value="N">ไม่ใช้งาน</option>
+                      </select>
+                  </div>
+              </div>
+          </div>
+          <clr-datagrid style="height: 90%;">
+              <clr-dg-column>ชื่อ-สกุล</clr-dg-column>
+              <clr-dg-column>อีเมล</clr-dg-column>
+              <clr-dg-column>หน่วยงาน</clr-dg-column>
+              <clr-dg-column>สถานะการใช้งาน</clr-dg-column>
+              <clr-dg-column>#</clr-dg-column>
+
+              <clr-dg-placeholder>ไม่พบข้อมูล!</clr-dg-placeholder>
+
+              <clr-dg-row *clrDgItems="let o of officers" [clrDgItem]="o">
+                  <clr-dg-cell>{{o.full_name}}</clr-dg-cell>
+                  <clr-dg-cell>{{o.email}}</clr-dg-cell>
+                  <clr-dg-cell>{{o.provider_name}}</clr-dg-cell>
+                  <clr-dg-cell>{{o.status}}</clr-dg-cell>
+                  <clr-dg-cell>
+                      <button type="button" class="btn btn-icon btn-primary btn-sm" (click)="clickEdit(o)">
+                          <clr-icon shape="note"></clr-icon>
+                      </button>
+                  </clr-dg-cell>
+              </clr-dg-row>
+
+              <clr-dg-footer>
+                  {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} จาก {{pagination.totalItems}} รายการ
+                  <clr-dg-pagination #pagination [clrDgPageSize]="perPage" [clrDgTotalItems]="total"></clr-dg-pagination>
+              </clr-dg-footer>
+          </clr-datagrid>
+      </div>
+  </div>
+</div>
+
+<clr-modal [(clrModalOpen)]="modalOfficer" [clrModalClosable]="false">
+  <h3 class="modal-title">ข้อมูลเจ้าหน้าที่</h3>
+  <div class="modal-body">
+      <form>
+          <section class="form-block">
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="form-group" style="padding-left: 150px;">
+                          <label class="required" for="fullName">ชื่อ-สกุล</label>
+                          <input class="form-control" type="text" id="fullName" placeholder="ชื่อ-สกุล" size="45" readonly value="{{profile.fullName}}">
+                      </div>
+                  </div>
+                  <div class="col-md-12">
+                      <div class="form-group" style="padding-left: 150px;">
+                          <label class="required" for="email">อีเมล</label>
+                          <input class="form-control" type="text" id="email" placeholder="อีเมล" size="45" readonly value="{{profile.email}}">
+                      </div>
+                  </div>
+                  <div class="col-md-12">
+                      <div class="form-group" style="padding-left: 150px;">
+                          <label for="jobPosition">ตำแหน่ง</label>
+                          <input class="form-control" type="text" id="jobPosition" placeholder="ตำแหน่ง" size="45" readonly value="{{profile.jobPosition}}">
+                      </div>
+                  </div>
+                  <div class="col-md-12">
+                      <div class="form-group" style="padding-left: 150px;">
+                          <label class="required" for="providerCode">รหัสหน่วยงาน</label>
+                          <input class="form-control" type="text" id="providerCode" placeholder="รหัสหน่วยงาน" size="45" readonly value="{{profile.providerCode}}">
+                      </div>
+                  </div>
+                  <div class="col-md-12">
+                      <div class="form-group" style="padding-left: 150px;">
+                          <label for="providerName">ชื่อหน่วยงาน</label>
+                          <input class="form-control" type="text" id="providerName" placeholder="ชื่อหน่วยงาน" size="45" readonly value="{{profile.providerName}}">
+                      </div>
+                  </div>
+                  <div>
+                      <div class="col-md-12">
+                          <div class="form-group" style="padding-left: 150px;">
+                              <label>สถานะการใช้งาน</label>
+                              <div class="checkbox">
+                                  <input type="checkbox" id="status" [(ngModel)]="status" name="status">
+                                  <label for="status">เปิดใช้งาน</label>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-12">
+                          <div class="form-group" style="padding-left: 150px;">
+                              <label>สิทธิ์การเข้าถึง</label>
+                              <clr-checkbox *ngFor="let p of permissions"  [id]="p.permission_code" [name]="p.permission_code" [(clrChecked)]="p.checked" (change)="changePermission($event)">
+                                  {{p.permission_name}}
+                              </clr-checkbox>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </section>
+      </form>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="clickSave()" [disabled]="!profile.officerId || !profile.email || !profile.providerCode">
+          บันทึก
+      </button>
+      <button type="button" class="btn btn-danger-outline" (click)="modalOfficer = false">
+          ยกเลิก
+      </button>
+  </div>
+</clr-modal>
+
+<app-loading-modal #loading></app-loading-modal>

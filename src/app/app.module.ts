@@ -17,22 +17,28 @@ import 'clarity-icons/shapes/all-shapes';
 
 import { LoginModule } from './login/login.module';
 import { AuthModule } from './auth/auth.module';
+import { ManagerModule } from './manager/manager.module';
+import { DeniedComponent } from './denied/denied.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DeniedComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
     FormsModule,
     HttpModule,
     ClarityModule.forRoot(),
     AdminModule,
     LoginModule,
-    AuthModule
+    AuthModule,
+    ManagerModule,
+    AppRoutingModule,
   ],
   providers: [
     JwtHelper,

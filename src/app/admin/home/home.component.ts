@@ -147,6 +147,7 @@ export class HomeComponent implements OnInit {
           }
           this.getDetail('waiting');
         } else {
+          this.alertService.error(`ข้อมูลที่ส่ง ${this.selected.length} รายการ ไม่สามารถบันทึกได้ กรุณาตรวจสอบ้อมูล`)
           console.log('exit');
         }
       });

@@ -11,6 +11,7 @@ export class DetailRequestComponent implements OnInit {
 
   // detail = [{ hn: '40701', name: { title_name: 'test', first_name: 'test', last_name: 'test' }, date_serv: '123', cid: '123' }];
   detail: any = {};
+  profile: any = {};
   @Input() details: any;
   hcode: any = '';
   hn: any = '';
@@ -56,12 +57,15 @@ export class DetailRequestComponent implements OnInit {
       console.log(this.hn, this.dateServe, this.requestId, this.uid);
 
       const rs: any = await this.serviceService.getService(this.hn, this.dateServe, this.requestId, this.uid);
-      console.log(rs);
 
       if (rs.ok) {
         this.detail = rs.rows;
-        this._firstName = rs.rows.profile.name.first_name;
-        this._lastName = rs.rows.profile.name.last_name;
+        this.profile = rs.profile[0];
+        // console.log(this.detail);
+
+        this._firstName = rs.profile[0].first_name;
+        this._lastName = rs.profile[0].last_name;
+        // console.log(this._firstName, '--', this._lastName);
       } else {
         // this.alertService.error(rs.error);
       }

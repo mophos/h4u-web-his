@@ -1,0 +1,71 @@
+<clr-modal [(clrModalOpen)]="opened" [clrModalClosable]="false">
+  <h3 class="modal-title">ลงทะเบียนเข้าร่วมโครงการ H4U</h3>
+  <div class="modal-body">
+    <form>
+      <section class="form-block">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group" style="padding-left: 150px;">
+              <label class="required" for="fullName">ชื่อ-สกุล</label>
+              <input class="form-control" type="text" id="fullName" placeholder="ชื่อ-สกุล" size="45" readonly value="{{profile.fullName}}">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group" style="padding-left: 150px;">
+              <label class="required" for="email">อีเมล</label>
+              <input class="form-control" type="text" id="email" placeholder="อีเมล" size="45" readonly value="{{profile.email}}">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group" style="padding-left: 150px;">
+              <label for="jobPosition">ตำแหน่ง</label>
+              <input class="form-control" type="text" id="jobPosition" placeholder="ตำแหน่ง" size="45" readonly value="{{profile.jobPosition}}">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group" style="padding-left: 150px;">
+              <label class="required" for="providerCode">รหัสหน่วยงาน</label>
+              <input class="form-control" type="text" id="providerCode" placeholder="รหัสหน่วยงาน" size="45" readonly value="{{profile.providerCode}}">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group" style="padding-left: 150px;">
+              <label for="providerName">ชื่อหน่วยงาน</label>
+              <input class="form-control" type="text" id="providerName" placeholder="ชื่อหน่วยงาน" size="45" readonly value="{{profile.providerName}}">
+            </div>
+          </div>
+          <div *ngIf="profile.isMember === 'Y'">
+            <div class="col-md-12">
+              <div class="form-group" style="padding-left: 150px;">
+                <label for="status">สถานะการใช้งาน</label>
+                <input class="form-control" type="text" id="status" placeholder="สถานะการใช้งาน" size="45" readonly value="{{profile.status}}">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group" style="padding-left: 150px;">
+                <label for="role">สิทธิ์การใช้งาน</label>
+                <input class="form-control" type="text" id="role" placeholder="สิทธิ์การใช้งาน" size="45" readonly value="{{profile.role}}">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group" style="padding-left: 150px;">
+                <label>สิทธิ์การเข้าถึง</label>
+                <input *ngFor="let p of profile.permissions" class="form-control" type="text" size="45" readonly value="- {{p.permission_name}}">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" *ngIf="!profile.isMember" (click)="clickSave()" [disabled]="!profile.providerCode || !profile.fullName || !profile.email">
+      ลงทะเบียนเข้าร่วมโครงการ
+    </button>
+    <button type="button" class="btn btn-danger-outline" (click)="opened = false">
+      ยกเลิก
+    </button>
+  </div>
+</clr-modal>
+
+<app-loading-modal #loading></app-loading-modal>
