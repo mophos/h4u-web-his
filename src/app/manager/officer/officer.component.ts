@@ -20,7 +20,7 @@ export class OfficerComponent implements OnInit {
   status = false;
   query: string;
   filterStatus = 'W';
-
+  perPage = 20;
   profile: any = {};
   permissions: any = [];
 
