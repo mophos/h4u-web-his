@@ -8,7 +8,8 @@
     "build": "ng build --prod --aot --base-href=./",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "pack:dist": "npx cpx 'dist/**/*' ../h4u-docker-build/dist"
   },
   "private": true,
   "dependencies": {
