@@ -1,13 +1,13 @@
 <div>
   <div class="row" *ngIf="profile">
     <div class="col-md-2">ข้อมูลจากระบบ HIS</div>
-    <div class="col-md-2">{{profile.hn}}
-      <clr-icon *ngIf="profile.hn != hn" style="color: yellow" shape="warning-standard"></clr-icon>
-      <clr-icon *ngIf="profile.hn == hn" style="color: green" shape="check"></clr-icon>
+    <div class="col-md-2">{{_hn}}
+      <clr-icon *ngIf="_hn != hn" style="color: yellow" shape="warning-standard"></clr-icon>
+      <clr-icon *ngIf="_hn == hn" style="color: green" shape="check"></clr-icon>
     </div>
-    <div class="col-md-2">{{profile.cid}}
-      <clr-icon *ngIf="profile.cid !== cid" style="color: yellow" shape="warning-standard"></clr-icon>
-      <clr-icon *ngIf="profile.cid == cid" style="color: green" shape="check"></clr-icon>
+    <div class="col-md-2">{{_cid}}
+      <clr-icon *ngIf="_cid !== cid" style="color: yellow" shape="warning-standard"></clr-icon>
+      <clr-icon *ngIf="_cid == cid" style="color: green" shape="check"></clr-icon>
     </div>
     <div class="col-md-2">
       {{_firstName}} {{_lastName}}
