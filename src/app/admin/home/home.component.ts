@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
   selected = [];
   hcode: any;
   vaccines = [];
+  status = 'waiting';
   // openRegister = false;
 
   // cid: any;
@@ -45,11 +46,12 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getDetail('waiting');
+    this.getDetail(this.status);
     // this.getVaccine('wait');
   }
 
   changeStatus(status) {
+    this.status = status;
     this.getDetail(status);
   }
 
