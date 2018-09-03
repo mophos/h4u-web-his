@@ -3,7 +3,7 @@ import { AlertService } from './../../services/alert.service';
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from '../../services/home.service';
 import { JwtHelper } from 'angular2-jwt';
-
+import * as moment from 'moment';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -104,7 +104,8 @@ export class HomeComponent implements OnInit {
     this.alertService.confirm('คุณต้องการที่จะอนุมัติ ใช่หรือไม่!')
       .then(async (result) => {
         if (result.value) {
-          const rs: any = await this.homeService.getService(w.hn, w.date_serv, w.request_id, w.uid);
+          const _dateServ = moment(w.date_serv).format('YYYY-MM-DD');
+          const rs: any = await this.homeService.getService(w.hn, _dateServ, w.request_id, w.uid);
           console.log(rs);
           if (rs.ok) {
             const rsS: any = await this.homeService.sendService(rs.rows);
