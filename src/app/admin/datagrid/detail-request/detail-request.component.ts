@@ -1,7 +1,7 @@
 import { AlertService } from './../../../services/alert.service';
 import { ServiceService } from './../../../services/service.service';
 import { Component, OnInit, Input } from '@angular/core';
-
+import * as moment from 'moment';
 @Component({
   selector: 'app-detail-request',
   templateUrl: './detail-request.component.html',
@@ -56,8 +56,8 @@ export class DetailRequestComponent implements OnInit {
     this.openLoading = true;
     try {
       console.log(this.hn, this.dateServe, this.requestId, this.uid);
-
-      const rs: any = await this.serviceService.getService(this.hn, this.dateServe, this.requestId, this.uid);
+      const _dateServ = moment(this.dateServe).format('YYYY-MM-DD');
+      const rs: any = await this.serviceService.getService(this.hn, _dateServ, this.requestId, this.uid);
 
       if (rs.ok) {
         this.detail = rs.rows;
