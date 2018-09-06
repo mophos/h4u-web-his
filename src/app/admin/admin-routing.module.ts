@@ -1,10 +1,11 @@
-import { ConsentValidateComponent } from './consent-validate/consent-validate.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
 import { AuthGuardService } from '../services/authguard.service';
+import { OfficerComponent } from '../manager/officer/officer.component';
+import { ManagerGuard } from '../manager/manager.guard';
 
 const routes: Routes = [
   {
@@ -20,9 +21,19 @@ const routes: Routes = [
       },
       {
         path: 'home', component: HomeComponent
+      }
+    ]
+  },
+  {
+    path: 'member',
+    component: LayoutComponent,
+    canActivate: [ManagerGuard],
+    children: [
+      {
+        path: '', redirectTo: 'officer', pathMatch: 'full'
       },
       {
-        path: 'consent/validate', component: ConsentValidateComponent
+        path: 'officer', component: OfficerComponent
       }
     ]
   }

@@ -16,8 +16,8 @@ export class LoginPageComponent implements OnInit {
   username: any;
   password: any;
   errorMessage: any;
-  isError: boolean = false;
-  logging: boolean = false;
+  isError = false;
+  logging = false;
   register = false;
   manageUser = false;
   manageH4U = false;
@@ -35,51 +35,31 @@ export class LoginPageComponent implements OnInit {
       this.isError = false;
       this.logging = true;
       try {
-        let rs: any = await this.loginService.doLogin(this.username, this.password);
+        const rs: any = await this.loginService.doLogin(this.username, this.password);
         if (rs.ok) {
           const token = rs.token;
           const decodedToken = this.jwtHelper.decodeToken(token);
           sessionStorage.setItem('token', token);
           const idx = _.findIndex(decodedToken.permissions, ['permission_code', '002']);
-          const status = decodedToken.status;
-          if (status === 'Y') {
-            if (decodedToken.is_admin === 'Y' || decodedToken.is_staff === 'Y') {
-              this.manageUser = true;
-              if (idx > -1) {
-                this.manageH4U = true;
-              } else {
-                this.route.navigate(['manager']);
-              }
-            } else {
-              this.manageUser = false;
-              if (idx > -1) {
-                this.route.navigate(['admin']);
-              } else {
-                this.isError = true;
-                this.errorMessage = 'บัญชีของคุณไม่มีสิทธิ์ใช้งาน Health for You (H4U)';
-              }
-            }
-          } else if (status === 'N') {
-            this.isError = true;
-            this.errorMessage = 'บัญชีของคุณถูกระงับการใช้งาน สำหรับโครงการ Health for You (H4U)';
-          } else if (status === 'W') {
-            this.isError = true;
-            this.errorMessage = 'กรุณารอการอนุมัติเข้าร่วมโครงการ Health for You (H4U)';
+          if (idx > -1) {
+            this.route.navigate(['admin']);
+          } else if (decodedToken.is_staff === 'Y' || decodedToken.is_staff === 'Y') {
+            this.route.navigate(['member/officer']);
           } else {
-            this.register = true;
             this.isError = true;
-            this.errorMessage = 'คุณยังไม่ได้ลงทะเบียนเข้าร่วมโครงการ Health for You (H4U)';
+            this.errorMessage = 'คุณไม่มีสิทธิการเข้าใช้งาน';
           }
+
         } else {
+          // this.register = true;
           this.isError = true;
           this.errorMessage = rs.error;
         }
-
         this.logging = false;
       } catch (error) {
         this.logging = false;
         this.isError = true;
-        this.errorMessage = 'เกิดข้อผิดพลาดในการเชื่อมต่อ';
+        this.errorMessage = error;
       }
     } else {
       this.isError = true;

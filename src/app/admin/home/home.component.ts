@@ -1,4 +1,3 @@
-import { ConsentService } from './../../services/consent.service';
 import { AlertService } from './../../services/alert.service';
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from '../../services/home.service';
@@ -37,7 +36,6 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private homeService: HomeService,
-    private consentService: ConsentService,
     private alertService: AlertService
   ) {
     const token = sessionStorage.getItem('token');
@@ -47,7 +45,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.getDetail(this.status);
-    // this.getVaccine('wait');
   }
 
   changeStatus(status) {
@@ -55,180 +52,117 @@ export class HomeComponent implements OnInit {
     this.getDetail(status);
   }
 
-  // changeStatusVaccine(status) {
-  //   this.getVaccine(status);
-  // }
-
-
   async getDetail(status) {
     try {
       this.openLoading = true;
       const rs: any = await this.homeService.getRequestService(status, this.hcode);
       if (rs.ok) {
         this.waiting = rs.rows;
-        console.log(this.waiting);
-
-        // for (const v of this.waiting) {
-        // const rsC = await this.consentService.getConsent(v.cid);
-        // v.consent = rsC.ok;
-        // }
+        this.openLoading = false;
+      } else {
+        this.openLoading = false;
+        this.alertService.error(rs.error);
       }
-      this.openLoading = false;
     } catch (error) {
-      //console.log(error);
+      console.log(error);
       this.openLoading = false;
+      this.alertService.error(error);
     }
   }
 
-  // async getVaccine(status) {
-  //   try {
-  //     this.openLoading = true;
-  //     const rs: any = await this.homeService.getRequestVaccine(status, this.hcode);
-  //     // console.log(rs);
-  //     if (rs.ok) {
-  //       this.vaccines = rs.rows;
-  //       for (const v of this.vaccines) {
-  //         const rsC = await this.consentService.getConsent(v.cid);
-  //         v.consent = rsC.ok;
-  //       }
-  //       // console.log(this.waiting);
-
-  //     }
-  //     this.openLoading = false;
-  //   } catch (error) {
-  //     this.openLoading = false;
-  //   }
-  // }
-
   approve(w) {
-    this.alertService.confirm('คุณต้องการที่จะอนุมัติ ใช่หรือไม่!')
-      .then(async (result) => {
-        if (result.value) {
-          const _dateServ = moment(w.date_serv).format('YYYY-MM-DD');
-          const rs: any = await this.homeService.getService(w.hn, _dateServ, w.request_id, w.uid);
-          console.log(rs);
-          if (rs.ok) {
-            const rsS: any = await this.homeService.sendService(rs.rows);
-          } else {
-            await this.homeService.noData(w.request_id);
-          }
-          this.getDetail('waiting');
-        } else {
-          console.log('exit');
-        }
-      });
-  }
-
-  disApprove(w) {
-    this.alertService.confirm('คุณต้องการที่จะไม่อนุมัติ ใช่หรือไม่')
-      .then(async (result) => {
-        if (result.value) {
-          console.log(w.request_id);
-
-          const rs: any = await this.homeService.disApprove(w.request_id);
-          console.log(rs);
-          this.getDetail('waiting');
-        } else {
-          console.log('exit');
-        }
-      });
-  }
-
-  approveMulti() {
-    this.alertService.confirm(`คุณต้องการที่จะอนุมัติ ${this.selected.length} รายการ ใช่หรือไม่!`)
-      .then(async (result) => {
-        if (result.value) {
-          for (const w of this.selected) {
+    try {
+      this.alertService.confirm('คุณต้องการที่จะอนุมัติ ใช่หรือไม่!')
+        .then(async (result) => {
+          this.openLoading = true;
+          if (result.value) {
             const _dateServ = moment(w.date_serv).format('YYYY-MM-DD');
             const rs: any = await this.homeService.getService(w.hn, _dateServ, w.request_id, w.uid);
             if (rs.ok) {
-              console.log(rs.rows);
               const rsS: any = await this.homeService.sendService(rs.rows);
-              console.log(rsS);
             } else {
               await this.homeService.noData(w.request_id);
             }
+            this.getDetail('waiting');
+            this.openLoading = false;
+          } else {
+            this.openLoading = false;
+            console.log('exit');
           }
-          this.getDetail('waiting');
-        } else {
-          this.alertService.error(`ข้อมูลที่ส่ง ${this.selected.length} รายการ ไม่สามารถบันทึกได้ กรุณาตรวจสอบ้อมูล`)
-          console.log('exit');
-        }
-      });
+        });
+    } catch (error) {
+      this.openLoading = false;
+      this.alertService.error(error);
+    }
+  }
+
+  disApprove(w) {
+    try {
+      this.alertService.confirm('คุณต้องการที่จะไม่อนุมัติ ใช่หรือไม่')
+        .then(async (result) => {
+          this.openLoading = true;
+          if (result.value) {
+            const rs: any = await this.homeService.disApprove(w.request_id);
+            this.getDetail('waiting');
+            this.openLoading = false;
+          } else {
+            console.log('exit');
+            this.openLoading = false;
+          }
+        });
+    } catch (error) {
+      this.openLoading = false;
+      this.alertService.error(error);
+    }
+  }
+
+  approveMulti() {
+    try {
+      this.alertService.confirm(`คุณต้องการที่จะอนุมัติ ${this.selected.length} รายการ ใช่หรือไม่!`)
+        .then(async (result) => {
+          this.openLoading = true;
+          if (result.value) {
+            for (const w of this.selected) {
+              const _dateServ = moment(w.date_serv).format('YYYY-MM-DD');
+              const rs: any = await this.homeService.getService(w.hn, _dateServ, w.request_id, w.uid);
+              if (rs.ok) {
+                const rsS: any = await this.homeService.sendService(rs.rows);
+              } else {
+                await this.homeService.noData(w.request_id);
+              }
+            }
+            this.getDetail('waiting');
+            this.openLoading = false;
+          } else {
+            this.openLoading = false;
+            console.log('exit');
+          }
+        });
+    } catch (error) {
+      this.openLoading = false;
+      this.alertService.error(error);
+    }
   }
 
   disApproveMulti() {
-    this.alertService.confirm(`คุณต้องการที่จะไม่อนุมัติ ${this.selected.length} รายการ ใช่หรือไม่`)
-      .then(async (result) => {
-        if (result.value) {
-          for (const w of this.selected) {
-            const rs: any = await this.homeService.disApprove(w.request_id);
+    try {
+      this.alertService.confirm(`คุณต้องการที่จะไม่อนุมัติ ${this.selected.length} รายการ ใช่หรือไม่`)
+        .then(async (result) => {
+          this.openLoading = true;
+          if (result.value) {
+            for (const w of this.selected) {
+              const rs: any = await this.homeService.disApprove(w.request_id);
+            }
+            this.getDetail('waiting');
+            this.openLoading = false;
+          } else {
+            this.openLoading = false;
+            console.log('exit');
           }
-          this.getDetail('waiting');
-        } else {
-          console.log('exit');
-        }
-      });
+        });
+    } catch (error) {
+      this.openLoading = false;
+      this.alertService.error(error);
+    }
   }
-  // #################### vaccine
-  // approveVaccine(w) {
-  //   this.alertService.confirm('คุณต้องการที่จะอนุมัติ ใช่หรือไม่!')
-  //     .then(async (result) => {
-  //       if (result.value) {
-  //         const rs: any = await this.homeService.getVaccine(w.hn, w.request_id);
-  //         if (rs.ok) {
-  //           const data = rs.rows;
-  //           const rsS: any = await this.homeService.sendVaccine(data);
-  //           if (rsS.ok) {
-  //             this.getVaccine('wait');
-  //           }
-  //         }
-  //       } else {
-  //         console.log('exit');
-  //       }
-  //     });
-  // }
-
-  // disApproveVaccine(w) {
-  //   this.alertService.confirm('คุณต้องการที่จะไม่อนุมัติ ใช่หรือไม่')
-  //     .then(async (result) => {
-  //       if (result.value) {
-  //         const rs: any = await this.homeService.disApproveVaccine(w.request_id);
-  //         this.getVaccine('wait');
-  //       } else {
-  //         console.log('exit');
-  //       }
-  //     });
-  // }
-
-  // approveMultiVaccine() {
-  //   this.alertService.confirm(`คุณต้องการที่จะอนุมัติ ${this.selected.length} รายการ ใช่หรือไม่!`)
-  //     .then(async (result) => {
-  //       if (result.value) {
-  //         for (const w of this.selected) {
-  //           const rs: any = await this.homeService.getVaccine(w.hn, w.request_id);
-  //           if (rs.ok) {
-  //             const rsS: any = await this.homeService.sendVaccine(rs.rows);
-  //           }
-  //         }
-  //         this.getVaccine('wait');
-  //       } else {
-  //         console.log('exit');
-  //       }
-  //     });
-  // }
-
-  // disApproveMultiVaccine() {
-  //   this.alertService.confirm(`คุณต้องการที่จะไม่อนุมัติ ${this.selected.length} รายการ ใช่หรือไม่`)
-  //     .then(async (result) => {
-  //       if (result.value) {
-  //         for (const w of this.selected) {
-  //           const rs: any = await this.homeService.disApproveVaccine(w.request_id);
-  //         }
-  //         this.getVaccine('wait');
-  //       } else {
-  //         console.log('exit');
-  //       }
-  //     });
-  // }
 }

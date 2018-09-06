@@ -6,7 +6,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
     tokenName: 'token',
     tokenGetter: (() => sessionStorage.getItem('token')),
-    globalHeaders: [{'Content-Type':'application/json'}],
+    globalHeaders: [{ 'Content-Type': 'application/json' }],
   }), http, options);
 }
 
@@ -19,4 +19,4 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     }
   ]
 })
-export class AuthModule {}
+export class AuthModule { }

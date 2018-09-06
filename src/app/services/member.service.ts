@@ -5,19 +5,19 @@ import { AuthHttp } from 'angular2-jwt';
 export class MemberService {
 
   constructor(
-    @Inject('API_H4U_URL') private h4uUrl: string,
+    @Inject('API_URL') private apiUrl: string,
     private authHttp: AuthHttp
   ) { }
 
   async insertOfficer(officer: any) {
-    const rs: any = await this.authHttp.post(`${this.h4uUrl}/member/register`, {
+    const rs: any = await this.authHttp.post(`${this.apiUrl}/member/register`, {
       officer: officer
     }).toPromise();
     return rs.json();
   }
 
   async searchOfficer(email: any) {
-    const rs: any = await this.authHttp.get(`${this.h4uUrl}/member/officer?email=${email}`).toPromise();
+    const rs: any = await this.authHttp.get(`${this.apiUrl}/member/officer?email=${email}`).toPromise();
     return rs.json();
   }
 

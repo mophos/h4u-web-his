@@ -8,9 +8,9 @@ export class StatusPipe implements PipeTransform {
   transform(value: any, args?: any): any {
     if (value === 'waiting') {
       return 'รออนุมัติ';
-    } else if (value === 'approve') {
+    } else if (value === 'approved') {
       return 'อนุมัติ';
-    } else if (value === 'disapprove') {
+    } else if (value === 'cancel') {
       return 'ไม่อนุมัติ';
     } else if (value === 'nodata') {
       return 'ไม่มีข้อมูล';

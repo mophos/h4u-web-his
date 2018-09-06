@@ -1,145 +1,80 @@
-<clr-tabs>
-  <clr-tab>
-    <button clrTabLink (click)="getDetail('waiting')">ข้อมูลสุขภาพ
+<div class="row" style="padding-top: 10px;">
+  <div class="col-md-2">
+    <div style="color:white">ข้อมูลสุขภาพ
       <span class="badge badge-success">{{waiting.length | number}}</span>
-    </button>
-    <clr-tab-content *clrIfActive>
-      <div class="row" style="padding-top: 10px;">
-        <div class="col-md-6">
+    </div>
+  </div>
+  <div class="col-md-4">
 
-          <div class="btn-group">
-            <button *ngIf="selected.length > 0 && status=='waiting'" (click)="approveMulti()" class="btn btn-sm btn-success-outline">อนุมัติ {{selected.length}} รายการ
-            </button>
-            <button *ngIf="selected.length > 0 && status=='waiting'" (click)="disApproveMulti()" class="btn btn-sm btn-danger-outline">ไม่อนุมัติ {{selected.length}} รายการ</button>
-          </div>
-          <!-- <clr-icon shape="search"></clr-icon>
+    <div class="btn-group">
+      <button *ngIf="selected.length > 0 && status=='waiting'" (click)="approveMulti()" class="btn btn-sm btn-success-outline">อนุมัติ {{selected.length}} รายการ
+      </button>
+      <button *ngIf="selected.length > 0 && status=='waiting'" (click)="disApproveMulti()" class="btn btn-sm btn-danger-outline">ไม่อนุมัติ {{selected.length}} รายการ</button>
+    </div>
+    <!-- <clr-icon shape="search"></clr-icon>
           <input type="text" name="txtQuery" style="width: 350px;" placeholder="ระบุ ชื่อ/สกุล, เลขบัตรประชาชน"> -->
-        </div>
-        <div class="col-md-6">
-          <div class="btn-group" style="float: right;">
-            <div class="radio btn btn-sm">
-              <input type="radio" (change)="changeStatus('all')" name="btn-group-demo-radios" id="btn-demo-radio-1">
-              <label for="btn-demo-radio-1">ทั้งหมด</label>
-            </div>
-            <div class="radio btn btn-sm">
-              <input type="radio" (change)="changeStatus('waiting')" name="btn-group-demo-radios" id="btn-demo-radio-2" checked>
-              <label for="btn-demo-radio-2">รออนุมัติ</label>
-            </div>
-            <div class="radio btn btn-sm">
-              <input type="radio" (change)="changeStatus('approved')" name="btn-group-demo-radios" id="btn-demo-radio-3">
-              <label for="btn-demo-radio-3">อนุมัติ</label>
-            </div>
-            <div class="radio btn btn-sm">
-              <input type="radio" (change)="changeStatus('cancel')" name="btn-group-demo-radios" id="btn-demo-radio-4">
-              <label for="btn-demo-radio-4">ไม่อนุมัติ</label>
-            </div>
-            <div class="radio btn btn-sm">
-              <input type="radio" (change)="changeStatus('nodata')" name="btn-group-demo-radios" id="btn-demo-radio-5">
-              <label for="btn-demo-radio-5">ไม่มีข้อมูล</label>
-            </div>
-          </div>
-        </div>
+  </div>
+  <div class="col-md-6">
+    <div class="btn-group" style="float: right;">
+      <div class="radio btn btn-sm">
+        <input type="radio" (change)="changeStatus('all')" name="btn-group-demo-radios" id="btn-demo-radio-1">
+        <label for="btn-demo-radio-1">ทั้งหมด</label>
       </div>
-      <clr-datagrid style="height: 90%;" [(clrDgSelected)]="selected">
-        <clr-dg-column>วันที่ขอข้อมูล</clr-dg-column>
-        <clr-dg-column>HN</clr-dg-column>
-        <clr-dg-column>เลขบัตรประชาชน</clr-dg-column>
-        <clr-dg-column>ชื่อ-สกุล</clr-dg-column>
-        <clr-dg-column>วันที่รับริการ</clr-dg-column>
-        <clr-dg-column>สถานะ</clr-dg-column>
-        <clr-dg-column></clr-dg-column>
+      <div class="radio btn btn-sm">
+        <input type="radio" (change)="changeStatus('waiting')" name="btn-group-demo-radios" id="btn-demo-radio-2" checked>
+        <label for="btn-demo-radio-2">รออนุมัติ</label>
+      </div>
+      <div class="radio btn btn-sm">
+        <input type="radio" (change)="changeStatus('approved')" name="btn-group-demo-radios" id="btn-demo-radio-3">
+        <label for="btn-demo-radio-3">อนุมัติ</label>
+      </div>
+      <div class="radio btn btn-sm">
+        <input type="radio" (change)="changeStatus('cancel')" name="btn-group-demo-radios" id="btn-demo-radio-4">
+        <label for="btn-demo-radio-4">ไม่อนุมัติ</label>
+      </div>
+      <div class="radio btn btn-sm">
+        <input type="radio" (change)="changeStatus('nodata')" name="btn-group-demo-radios" id="btn-demo-radio-5">
+        <label for="btn-demo-radio-5">ไม่มีข้อมูล</label>
+      </div>
+    </div>
+  </div>
+</div>
+<clr-datagrid style="height: 90%;" [(clrDgSelected)]="selected">
+  <clr-dg-column>วันที่ขอข้อมูล</clr-dg-column>
+  <clr-dg-column>HN</clr-dg-column>
+  <clr-dg-column>เลขบัตรประชาชน</clr-dg-column>
+  <clr-dg-column>ชื่อ-สกุล</clr-dg-column>
+  <clr-dg-column>วันที่รับริการ</clr-dg-column>
+  <clr-dg-column>สถานะ</clr-dg-column>
+  <clr-dg-column></clr-dg-column>
 
-        <clr-dg-placeholder>ไม่พบผู้ขอข้อมูล!</clr-dg-placeholder>
+  <clr-dg-placeholder>ไม่พบผู้ขอข้อมูล!</clr-dg-placeholder>
 
-        <clr-dg-row *clrDgItems="let w of waiting" [clrDgItem]="w">
-          <app-detail-request [details]="w" *clrIfExpanded ngProjectAs="clr-dg-row-detail"></app-detail-request>
-          <clr-dg-cell>{{w.date_request | toThaiDate}}</clr-dg-cell>
-          <clr-dg-cell>{{w.hn}}</clr-dg-cell>
-          <clr-dg-cell>{{w.cid}}</clr-dg-cell>
-          <clr-dg-cell>{{w.first_name}} {{w.last_name}}</clr-dg-cell>
-          <clr-dg-cell>{{w.date_serv | toThaiDate}}</clr-dg-cell>
-          <clr-dg-cell>{{w.status | statusToTh}}</clr-dg-cell>
-          <clr-dg-cell>
-            <div class="btn-group">
-              <button [disabled]="w.status!=='waiting'" (click)="approve(w)" class="btn btn-sm btn-success-outline">อนุมัติ</button>
-              <button [disabled]="w.status!=='waiting'" (click)="disApprove(w)" class="btn btn-sm btn-danger-outline">ไม่อนุมัติ</button>
-            </div>
-          </clr-dg-cell>
-          <!-- <clr-dg-cell>
+  <clr-dg-row *clrDgItems="let w of waiting" [clrDgItem]="w">
+    <app-detail-request [details]="w" *clrIfExpanded ngProjectAs="clr-dg-row-detail"></app-detail-request>
+    <clr-dg-cell>{{w.date_request | toThaiDate}}</clr-dg-cell>
+    <clr-dg-cell>{{w.hn}}</clr-dg-cell>
+    <clr-dg-cell>{{w.cid}}</clr-dg-cell>
+    <clr-dg-cell>{{w.first_name}} {{w.last_name}}</clr-dg-cell>
+    <clr-dg-cell>{{w.date_serv | toThaiDate}}</clr-dg-cell>
+    <clr-dg-cell>{{w.status | statusToTh}}</clr-dg-cell>
+    <clr-dg-cell>
+      <div class="btn-group">
+        <button [disabled]="w.status!=='waiting'" (click)="approve(w)" class="btn btn-sm btn-success-outline">อนุมัติ</button>
+        <button [disabled]="w.status!=='waiting'" (click)="disApprove(w)" class="btn btn-sm btn-danger-outline">ไม่อนุมัติ</button>
+      </div>
+    </clr-dg-cell>
+    <!-- <clr-dg-cell>
             <clr-icon shape="check" class="is-success" *ngIf="user.is_active === 'Y'"></clr-icon>
             <clr-icon shape="times" class="is-danger" *ngIf="user.is_active === 'N' || !user.is_active"></clr-icon>
           </clr-dg-cell> -->
-        </clr-dg-row>
+  </clr-dg-row>
 
-        <clr-dg-footer>
-          {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} จาก {{pagination.totalItems}} รายการ
-          <clr-dg-pagination #pagination [clrDgPageSize]="perPage" [clrDgTotalItems]="total"></clr-dg-pagination>
-        </clr-dg-footer>
-      </clr-datagrid>
-    </clr-tab-content>
-  </clr-tab>
-
-
-</clr-tabs>
-
-<!-- <clr-modal [(clrModalOpen)]="openRegister" [clrModalClosable]="false">
-  <h3 class="modal-title">ยืนยันการลงทะเบียนรับบริการ</h3>
-  <div class="modal-body">
-    <span class="spinner spinner-inline" *ngIf="isLoading">
-      กรุณารอซักครู่...
-    </span>
-    <span *ngIf="isLoading">
-      กรุณารอซักครู่...
-    </span>
-    <clr-alert [clrAlertType]="'alert-danger'" [clrAlertClosable]="false" *ngIf="isError">
-      <div class="alert-item">
-        <span class="alert-text">
-          {{errorMessage}}
-        </span>
-      </div>
-    </clr-alert>
-    <clr-alert [clrAlertType]="'alert-success'" [clrAlertClosable]="false" *ngIf="isValidated">
-      <div class="alert-item">
-        <span class="alert-text">
-          ผู้ป่วยรายนี้สามารถขึ้นทะเบียนได้
-        </span>
-      </div>
-    </clr-alert>
-    <form>
-      <section class="form-block">
-        <label>ตรวจสอบการลงทะเบียน</label>
-        <div class="form-group">
-          <label for="formFields_1">เลขบัตรประชาชน</label>
-          <input type="text" name="txtCid" style="width: 100%;" [(ngModel)]="cid" disabled>
-        </div>
-        <div class="form-group">
-          <label for="formFields_1">MOPH ID</label>
-          <input type="text" name="txtMophId" style="width: 100%;" [(ngModel)]="mophid" disabled>
-        </div>
-        <div class="form-group">
-          <label for="formFields_1">ชื่อ (MOPH)</label>
-          <input type="text" name="txtFirstName" style="width: 100%;" [(ngModel)]="firstName" disabled>
-        </div>
-        <div class="form-group">
-          <label for="formFields_1">สกุล (MOPH)</label>
-          <input type="text" name="txtLastName" style="width: 100%;" [(ngModel)]="lastName" disabled>
-        </div>
-        <div class="checkbox">
-          <input type="checkbox" id="checkActive" name="checkActive" [checked]="isActive" [(ngModel)]="isActive">
-          <label for="checkActive">เปิดใช้งาน Application</label>
-        </div>
-      </section>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-primary btn-sm" (click)="saveMophId()" [clrLoading]="isSaving" [disabled]="!mophid || isLoading || isSaving">
-      บันทึก
-    </button>
-    <button type="button" class="btn btn-danger btn-sm" (click)="openRegister = false" [disabled]="isLoading || isSaving">
-      ปิดหน้าต่าง
-    </button>
-  </div>
-</clr-modal> -->
+  <clr-dg-footer>
+    {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} จาก {{pagination.totalItems}} รายการ
+    <clr-dg-pagination #pagination [clrDgPageSize]="perPage" [clrDgTotalItems]="total"></clr-dg-pagination>
+  </clr-dg-footer>
+</clr-datagrid>
 
 <clr-modal [(clrModalOpen)]="openLoading" [clrModalClosable]="false">
   <h3 class="modal-title">ประมวลผล</h3>

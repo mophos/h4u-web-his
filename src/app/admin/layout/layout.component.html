@@ -15,9 +15,6 @@
         <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
           <a href="javascript://" clrDropdownItem (click)="logout()">ออกจากระบบ</a>
         </clr-dropdown-menu>
-        <!-- <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
-          <a href="javascript://" clrDropdownItem (click)="testenv()">ทดสอบการเชื่อมต่อ</a>
-        </clr-dropdown-menu> -->
       </clr-dropdown>
 
     </div>
@@ -29,20 +26,14 @@
     </div>
 
     <clr-vertical-nav [clrVerticalNavCollapsible]="true" [(clrVerticalNavCollapsed)]="collapsed" [clr-nav-level]="1">
-
-      <!-- <a clrVerticalNavLink routerLink="/admin/dashboard" routerLinkActive="active">
-        <clr-icon clrVerticalNavIcon shape="dashboard"></clr-icon>
-        Dashboard
-      </a> -->
-
-      <a clrVerticalNavLink routerLink="/admin/home" routerLinkActive="active">
+      <a clrVerticalNavLink routerLink="/admin/home" *ngIf="menuH4U" routerLinkActive="active">
         <clr-icon clrVerticalNavIcon shape="home"></clr-icon>
         หน้าหลัก
       </a>
-      <!-- <a clrVerticalNavLink routerLink="/admin/consent/validate" routerLinkActive="active">
-        <clr-icon clrVerticalNavIcon shape="search"></clr-icon>
-        ตรวจสอบการเปิดเผยข้อมูล
-      </a> -->
+      <a clrVerticalNavLink routerLink="/member/officer" *ngIf="menuManage" routerLinkActive="active">
+        <clr-icon clrVerticalNavIcon shape="note"></clr-icon>
+        จัดการบัญชีผู้ใช้งาน
+      </a>
     </clr-vertical-nav>
 
   </div>
