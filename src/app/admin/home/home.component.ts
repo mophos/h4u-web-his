@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
   // registeredUsers: any = [];
   // unRegisteredUsers: any = [];
   // total = 0;
-  // perPage = 20;
+  perPage = 20;
   openLoading = false;
   waiting = [];
   selected = [];
