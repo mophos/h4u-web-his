@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { AuthGuardService } from '../services/authguard.service';
 import { OfficerComponent } from '../manager/officer/officer.component';
 import { ManagerGuard } from '../manager/manager.guard';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,9 @@ const routes: Routes = [
       },
       {
         path: 'home', component: HomeComponent
+      },
+      {
+        path: 'profile', component: ProfileComponent
       }
     ]
   },

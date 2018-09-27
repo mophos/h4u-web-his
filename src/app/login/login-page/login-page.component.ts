@@ -43,7 +43,7 @@ export class LoginPageComponent implements OnInit {
           const idx = _.findIndex(decodedToken.permissions, ['permission_code', '002']);
           if (idx > -1) {
             this.route.navigate(['admin']);
-          } else if (decodedToken.is_staff === 'Y' || decodedToken.is_staff === 'Y') {
+          } else if (decodedToken.is_admin === 'Y' || decodedToken.is_staff === 'Y') {
             this.route.navigate(['member/officer']);
           } else {
             this.isError = true;

@@ -17,13 +17,16 @@ import { StatusPipe } from '../pipe/status.pipe';
 import { DetailRequestComponent } from './datagrid/detail-request/detail-request.component';
 import { ServiceService } from '../services/service.service';
 import { ToThaiDateTimePipe } from '../to-thai-date-time.pipe';
+import { ProfileComponent } from './profile/profile.component';
+import { DirectivesModule } from '../directives/directives.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     AdminRoutingModule,
-    ClarityModule
+    ClarityModule,
+    DirectivesModule
   ],
   providers: [HomeService, AuthGuardService, AlertService, ServiceService],
   declarations: [
@@ -34,7 +37,8 @@ import { ToThaiDateTimePipe } from '../to-thai-date-time.pipe';
     TimestampToThaiDatePipe,
     ToThaiDateTimePipe,
     StatusPipe,
-    DetailRequestComponent
+    DetailRequestComponent,
+    ProfileComponent
   ],
   exports: [
     DetailRequestComponent
