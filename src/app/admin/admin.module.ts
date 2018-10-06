@@ -19,6 +19,9 @@ import { ServiceService } from '../services/service.service';
 import { ToThaiDateTimePipe } from '../to-thai-date-time.pipe';
 import { ProfileComponent } from './profile/profile.component';
 import { DirectivesModule } from '../directives/directives.module';
+import { NreferComponent } from './nrefer/nrefer.component';
+import { IsOnlineComponent } from './is-online/is-online.component';
+import { QueueComponent } from './queue/queue.component';
 
 @NgModule({
   imports: [
@@ -38,7 +41,10 @@ import { DirectivesModule } from '../directives/directives.module';
     ToThaiDateTimePipe,
     StatusPipe,
     DetailRequestComponent,
-    ProfileComponent
+    ProfileComponent,
+    NreferComponent,
+    IsOnlineComponent,
+    QueueComponent
   ],
   exports: [
     DetailRequestComponent
