@@ -52,7 +52,7 @@
 
   <clr-dg-row *clrDgItems="let w of waiting" [clrDgItem]="w">
     <app-detail-request [details]="w" *clrIfExpanded ngProjectAs="clr-dg-row-detail"></app-detail-request>
-    <clr-dg-cell>{{w.date_request | toThaiDate}}</clr-dg-cell>
+    <clr-dg-cell>{{w.date_request | timestampToThaiDate}}</clr-dg-cell>
     <clr-dg-cell>{{w.hn}}</clr-dg-cell>
     <clr-dg-cell>{{w.cid}}</clr-dg-cell>
     <clr-dg-cell>{{w.first_name}} {{w.last_name}}</clr-dg-cell>
