@@ -6,6 +6,10 @@ import { HomeComponent } from './home/home.component';
 import { AuthGuardService } from '../services/authguard.service';
 import { OfficerComponent } from '../manager/officer/officer.component';
 import { ManagerGuard } from '../manager/manager.guard';
+import { ProfileComponent } from './profile/profile.component';
+import { NreferComponent } from './nrefer/nrefer.component';
+import { IsOnlineComponent } from './is-online/is-online.component';
+import { QueueComponent } from './queue/queue.component';
 
 const routes: Routes = [
   {
@@ -21,6 +25,18 @@ const routes: Routes = [
       },
       {
         path: 'home', component: HomeComponent
+      },
+      {
+        path: 'profile', component: ProfileComponent
+      },
+      {
+        path: 'nrefer', component: NreferComponent
+      },
+      {
+        path: 'is', component: IsOnlineComponent
+      },
+      {
+        path: 'queue', component: QueueComponent
       }
     ]
   },

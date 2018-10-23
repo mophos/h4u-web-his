@@ -15,6 +15,9 @@ export class LayoutComponent implements OnInit {
   collapsed = false;
   menuManage = false;
   menuH4U = false;
+  menuNrefer = false;
+  menuIS = false;
+  menuQueue = false;
   decoded: any;
   constructor(
     private router: Router,
@@ -36,9 +39,24 @@ export class LayoutComponent implements OnInit {
       if (this.decoded.is_admin === 'Y' || this.decoded.is_staff === 'Y') {
         this.menuManage = true;
       }
-      const idx = _.findIndex(this.decoded.permissions, ['permission_code', '002']); {
-        if (idx > -1) {
+      const idx002 = _.findIndex(this.decoded.permissions, ['permission_code', '002']); {
+        if (idx002 > -1) {
           this.menuH4U = true;
+        }
+      }
+      const idx004 = _.findIndex(this.decoded.permissions, ['permission_code', '004']); {
+        if (idx004 > -1) {
+          this.menuNrefer = true;
+        }
+      }
+      const idx005 = _.findIndex(this.decoded.permissions, ['permission_code', '005']); {
+        if (idx005 > -1) {
+          this.menuIS = true;
+        }
+      }
+      const idx006 = _.findIndex(this.decoded.permissions, ['permission_code', '006']); {
+        if (idx006 > -1) {
+          this.menuQueue = true;
         }
       }
     }

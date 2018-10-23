@@ -17,13 +17,19 @@ import { StatusPipe } from '../pipe/status.pipe';
 import { DetailRequestComponent } from './datagrid/detail-request/detail-request.component';
 import { ServiceService } from '../services/service.service';
 import { ToThaiDateTimePipe } from '../to-thai-date-time.pipe';
+import { ProfileComponent } from './profile/profile.component';
+import { DirectivesModule } from '../directives/directives.module';
+import { NreferComponent } from './nrefer/nrefer.component';
+import { IsOnlineComponent } from './is-online/is-online.component';
+import { QueueComponent } from './queue/queue.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     AdminRoutingModule,
-    ClarityModule
+    ClarityModule,
+    DirectivesModule
   ],
   providers: [HomeService, AuthGuardService, AlertService, ServiceService],
   declarations: [
@@ -34,7 +40,11 @@ import { ToThaiDateTimePipe } from '../to-thai-date-time.pipe';
     TimestampToThaiDatePipe,
     ToThaiDateTimePipe,
     StatusPipe,
-    DetailRequestComponent
+    DetailRequestComponent,
+    ProfileComponent,
+    NreferComponent,
+    IsOnlineComponent,
+    QueueComponent
   ],
   exports: [
     DetailRequestComponent

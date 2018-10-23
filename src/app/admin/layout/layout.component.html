@@ -34,6 +34,22 @@
         <clr-icon clrVerticalNavIcon shape="note"></clr-icon>
         จัดการบัญชีผู้ใช้งาน
       </a>
+      <a clrVerticalNavLink routerLink="/admin/nrefer" *ngIf="menuNrefer" routerLinkActive="active">
+        <clr-icon clrVerticalNavIcon shape="export"></clr-icon>
+        nRefer
+      </a>
+      <a clrVerticalNavLink routerLink="/admin/is" *ngIf="menuIS" routerLinkActive="active">
+        <clr-icon clrVerticalNavIcon shape="heart"></clr-icon>
+        IS Online
+      </a>
+      <a clrVerticalNavLink routerLink="/admin/queue" *ngIf="menuQueue" routerLinkActive="active">
+        <clr-icon clrVerticalNavIcon shape="event"></clr-icon>
+        Queue
+      </a>
+      <a clrVerticalNavLink routerLink="/admin/profile" routerLinkActive="active">
+        <clr-icon clrVerticalNavIcon shape="user"></clr-icon>
+        ข้อมูลส่วนตัว
+      </a>
     </clr-vertical-nav>
 
   </div>
