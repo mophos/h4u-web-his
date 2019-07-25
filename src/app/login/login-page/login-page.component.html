@@ -1,30 +1,33 @@
 <div class="login-wrapper">
-    <form class="login">
-        <label class="title">
-            <h3 class="welcome">ยินดีต้อนรับ</h3>
-            ระบบ Health For You (H4U) For Hospital
-            <h5 class="hint">สำหรับเจ้าหน้าที่ส่งข้อมูลทะเบียนผู้ป่วยเพื่อดูข้อมูลผ่านแอพลิเคชัน H4U</h5>
-        </label>
-        <div class="login-group">
-            <div class="login-group" *ngIf="!manageUser || !manageH4U">
-                <input class="username" (keyup)="enterLogin($event)" type="text" name="username" [(ngModel)]="username" placeholder="ชื่อผู้ใช้งาน">
-                <input class="password" (keyup)="enterLogin($event)" type="password" name="password" [(ngModel)]="password" placeholder="รหัสผ่าน">
-                <div class="error active" *ngIf="isError">
-                    {{errorMessage}}
-                </div>
-                <button (click)="doLogin()" [clrLoading]="logging" type="button" class="btn btn-primary" [disabled]="!username || !password">เข้าใช้งานระบบ</button>
-            </div>
-            <button *ngIf="register" (click)="doRegister()" type="button" class="btn btn-info" style="margin-top: 12px;">
-                ลงทะเบียนเข้าร่วมโครงการ H4U
-            </button>
-            <button *ngIf="manageH4U" routerLink="/admin" type="button" class="btn btn-info" style="margin-top: 12px;">
-                เข้าใช้งาน Health For You (H4U)
-            </button>
-            <button *ngIf="manageUser" routerLink="/manager" type="button" class="btn btn-info" style="margin-top: 12px;">
-                จัดการบัญชีผู้ใช้งาน H4U
-            </button>
+  <form class="login">
+    <label class="title">
+      <h3 class="welcome">ยินดีต้อนรับ</h3>
+      ระบบ HIS Gateway
+      <h5 class="hint">สำหรับเจ้าหน้าที่ส่งข้อมูลทะเบียนผู้ป่วย</h5>
+    </label>
+    <div class="login-group">
+      <div class="login-group" *ngIf="!manageUser || !manageH4U">
+        <input class="username" (keyup)="enterLogin($event)" type="text" name="username" [(ngModel)]="username"
+          placeholder="ชื่อผู้ใช้งาน">
+        <input class="password" (keyup)="enterLogin($event)" type="password" name="password" [(ngModel)]="password"
+          placeholder="รหัสผ่าน">
+        <div class="error active" *ngIf="isError">
+          {{errorMessage}}
         </div>
-    </form>
+        <button (click)="doLogin()" [clrLoading]="logging" type="button" class="btn btn-primary"
+          [disabled]="!username || !password">เข้าใช้งานระบบ</button>
+      </div>
+      <!-- <button *ngIf="register" (click)="doRegister()" type="button" class="btn btn-info" style="margin-top: 12px;">
+        ลงทะเบียนเข้าร่วมโครงการ H4U
+      </button>
+      <button *ngIf="manageH4U" routerLink="/admin" type="button" class="btn btn-info" style="margin-top: 12px;">
+        เข้าใช้งาน Health For You (H4U)
+      </button>
+      <button *ngIf="manageUser" routerLink="/manager" type="button" class="btn btn-info" style="margin-top: 12px;">
+        จัดการบัญชีผู้ใช้งาน H4U
+      </button> -->
+    </div>
+  </form>
 </div>
 
 <app-register-modal #registerModal></app-register-modal>

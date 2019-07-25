@@ -7,12 +7,12 @@
   <div class="col-md-4">
 
     <div class="btn-group">
-      <button *ngIf="selected.length > 0 && status=='waiting'" (click)="approveMulti()" class="btn btn-sm btn-success-outline">อนุมัติ {{selected.length}} รายการ
+      <button *ngIf="selected.length > 0 && status=='waiting'" (click)="approveMulti()"
+        class="btn btn-sm btn-success-outline">อนุมัติ {{selected.length}} รายการ
       </button>
-      <button *ngIf="selected.length > 0 && status=='waiting'" (click)="disApproveMulti()" class="btn btn-sm btn-danger-outline">ไม่อนุมัติ {{selected.length}} รายการ</button>
+      <button *ngIf="selected.length > 0 && status=='waiting'" (click)="disApproveMulti()"
+        class="btn btn-sm btn-danger-outline">ไม่อนุมัติ {{selected.length}} รายการ</button>
     </div>
-    <!-- <clr-icon shape="search"></clr-icon>
-          <input type="text" name="txtQuery" style="width: 350px;" placeholder="ระบุ ชื่อ/สกุล, เลขบัตรประชาชน"> -->
   </div>
   <div class="col-md-6">
     <div class="btn-group" style="float: right;">
@@ -21,7 +21,8 @@
         <label for="btn-demo-radio-1">ทั้งหมด</label>
       </div>
       <div class="radio btn btn-sm">
-        <input type="radio" (change)="changeStatus('waiting')" name="btn-group-demo-radios" id="btn-demo-radio-2" checked>
+        <input type="radio" (change)="changeStatus('waiting')" name="btn-group-demo-radios" id="btn-demo-radio-2"
+          checked>
         <label for="btn-demo-radio-2">รออนุมัติ</label>
       </div>
       <div class="radio btn btn-sm">
@@ -60,14 +61,12 @@
     <clr-dg-cell>{{w.status | statusToTh}}</clr-dg-cell>
     <clr-dg-cell>
       <div class="btn-group">
-        <button [disabled]="w.status!=='waiting'" (click)="approve(w)" class="btn btn-sm btn-success-outline">อนุมัติ</button>
-        <button [disabled]="w.status!=='waiting'" (click)="disApprove(w)" class="btn btn-sm btn-danger-outline">ไม่อนุมัติ</button>
+        <button [disabled]="w.status!=='waiting'" (click)="approve(w)"
+          class="btn btn-sm btn-success-outline">อนุมัติ</button>
+        <button [disabled]="w.status!=='waiting'" (click)="disApprove(w)"
+          class="btn btn-sm btn-danger-outline">ไม่อนุมัติ</button>
       </div>
     </clr-dg-cell>
-    <!-- <clr-dg-cell>
-            <clr-icon shape="check" class="is-success" *ngIf="user.is_active === 'Y'"></clr-icon>
-            <clr-icon shape="times" class="is-danger" *ngIf="user.is_active === 'N' || !user.is_active"></clr-icon>
-          </clr-dg-cell> -->
   </clr-dg-row>
 
   <clr-dg-footer>

@@ -71,98 +71,90 @@ export class HomeComponent implements OnInit {
   }
 
   approve(w) {
-    try {
-      this.alertService.confirm('คุณต้องการที่จะอนุมัติ ใช่หรือไม่!')
-        .then(async (result) => {
-          this.openLoading = true;
-          if (result.value) {
-            const _dateServ = moment(w.date_serv).format('YYYY-MM-DD');
-            const rs: any = await this.homeService.getService(w.hn, _dateServ, w.request_id, w.uid);
-            if (rs.ok) {
-              const rsS: any = await this.homeService.sendService(rs.rows);
-            } else {
-              await this.homeService.noData(w.request_id);
-            }
-            this.getDetail('waiting');
-            this.openLoading = false;
+    this.alertService.confirm('คุณต้องการที่จะอนุมัติ ใช่หรือไม่!')
+      .then(async (result) => {
+        this.openLoading = true;
+        if (result.value) {
+          const _dateServ = moment(w.date_serv).format('YYYY-MM-DD');
+          const rs: any = await this.homeService.getService(w.hn, _dateServ, w.request_id, w.uid);
+          if (rs.ok) {
+            await this.homeService.sendService(rs.rows);
           } else {
-            this.openLoading = false;
-            console.log('exit');
+            await this.homeService.noData(w.request_id);
           }
-        });
-    } catch (error) {
-      this.openLoading = false;
-      this.alertService.error(error);
-    }
+          this.getDetail('waiting');
+          this.openLoading = false;
+        } else {
+          this.openLoading = false;
+          console.log('exit');
+        }
+      }).catch(error => {
+        this.openLoading = false;
+        this.alertService.error(error);
+      });
   }
 
   disApprove(w) {
-    try {
-      this.alertService.confirm('คุณต้องการที่จะไม่อนุมัติ ใช่หรือไม่')
-        .then(async (result) => {
-          this.openLoading = true;
-          if (result.value) {
-            const rs: any = await this.homeService.disApprove(w.request_id);
-            this.getDetail('waiting');
-            this.openLoading = false;
-          } else {
-            console.log('exit');
-            this.openLoading = false;
-          }
-        });
-    } catch (error) {
-      this.openLoading = false;
-      this.alertService.error(error);
-    }
+    this.alertService.confirm('คุณต้องการที่จะไม่อนุมัติ ใช่หรือไม่')
+      .then(async (result) => {
+        this.openLoading = true;
+        if (result.value) {
+          await this.homeService.disApprove(w.request_id);
+          this.getDetail('waiting');
+          this.openLoading = false;
+        } else {
+          console.log('exit');
+          this.openLoading = false;
+        }
+      }).catch(error => {
+        this.openLoading = false;
+        this.alertService.error(error);
+      });
   }
 
   approveMulti() {
-    try {
-      this.alertService.confirm(`คุณต้องการที่จะอนุมัติ ${this.selected.length} รายการ ใช่หรือไม่!`)
-        .then(async (result) => {
-          this.openLoading = true;
-          if (result.value) {
-            for (const w of this.selected) {
-              const _dateServ = moment(w.date_serv).format('YYYY-MM-DD');
-              const rs: any = await this.homeService.getService(w.hn, _dateServ, w.request_id, w.uid);
-              if (rs.ok) {
-                const rsS: any = await this.homeService.sendService(rs.rows);
-              } else {
-                await this.homeService.noData(w.request_id);
-              }
+    this.alertService.confirm(`คุณต้องการที่จะอนุมัติ ${this.selected.length} รายการ ใช่หรือไม่!`)
+      .then(async (result) => {
+        this.openLoading = true;
+        if (result.value) {
+          for (const w of this.selected) {
+            const _dateServ = moment(w.date_serv).format('YYYY-MM-DD');
+            const rs: any = await this.homeService.getService(w.hn, _dateServ, w.request_id, w.uid);
+            if (rs.ok) {
+              await this.homeService.sendService(rs.rows);
+            } else {
+              await this.homeService.noData(w.request_id);
             }
-            this.getDetail('waiting');
-            this.openLoading = false;
-          } else {
-            this.openLoading = false;
-            console.log('exit');
           }
-        });
-    } catch (error) {
-      this.openLoading = false;
-      this.alertService.error(error);
-    }
+          this.getDetail('waiting');
+          this.openLoading = false;
+        } else {
+          this.openLoading = false;
+          console.log('exit');
+        }
+      }).catch(error => {
+        this.openLoading = false;
+        this.alertService.error(error);
+      });
   }
 
   disApproveMulti() {
-    try {
-      this.alertService.confirm(`คุณต้องการที่จะไม่อนุมัติ ${this.selected.length} รายการ ใช่หรือไม่`)
-        .then(async (result) => {
-          this.openLoading = true;
-          if (result.value) {
-            for (const w of this.selected) {
-              const rs: any = await this.homeService.disApprove(w.request_id);
-            }
-            this.getDetail('waiting');
-            this.openLoading = false;
-          } else {
-            this.openLoading = false;
-            console.log('exit');
+    this.alertService.confirm(`คุณต้องการที่จะไม่อนุมัติ ${this.selected.length} รายการ ใช่หรือไม่`)
+      .then(async (result) => {
+        this.openLoading = true;
+        if (result.value) {
+          for (const w of this.selected) {
+            await this.homeService.disApprove(w.request_id);
           }
-        });
-    } catch (error) {
-      this.openLoading = false;
-      this.alertService.error(error);
-    }
+          this.getDetail('waiting');
+          this.openLoading = false;
+        } else {
+          this.openLoading = false;
+          console.log('exit');
+        }
+      }).catch(error => {
+        this.openLoading = false;
+        this.alertService.error(error);
+      });
   }
 }

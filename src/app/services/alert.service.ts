@@ -32,12 +32,11 @@ export class AlertService {
     };
     swal(option)
       .then(
-      function () { },
-      // handling the promise rejection
-      function (dismiss) {
-        if (dismiss === 'timer') { }
-      }
-      )
+        function () { },
+        // handling the promise rejection
+        function (dismiss) {
+        }
+      );
 
   }
 

@@ -34,14 +34,12 @@ export class DetailRequestComponent implements OnInit {
   ) {
   }
 
-  async ngOnInit() {
-    await this.getDetail();
-    await this.getService();
+  ngOnInit() {
+    this.getDetail();
+    this.getService();
   }
 
   getDetail() {
-    console.log(this.details);
-
     this.dateServe = this.details.date_serv;
     this.hn = this.details.hn;
     this.hcode = this.details.hcode;
@@ -55,7 +53,6 @@ export class DetailRequestComponent implements OnInit {
   async getService() {
     this.openLoading = true;
     try {
-      console.log(this.hn, this.dateServe, this.requestId, this.uid);
       const _dateServ = moment(this.dateServe).format('YYYY-MM-DD');
       const rs: any = await this.serviceService.getService(this.hn, _dateServ, this.requestId, this.uid);
 
@@ -66,7 +63,6 @@ export class DetailRequestComponent implements OnInit {
         this._lastName = rs.profile[0].last_name;
         this._hn = rs.profile[0].hn;
         this._cid = rs.profile[0].cid;
-        // console.log(this._firstName, '--', this._lastName);
       } else {
         // this.alertService.error(rs.error);
       }

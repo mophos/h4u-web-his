@@ -79,7 +79,7 @@ export class OfficerComponent implements OnInit {
     this.profile.email = o.email;
     this.profile.jobPosition = o.job_position;
     this.profile.providerName = o.provider_name;
-    this.status = o.status === 'Y' ? true : false;
+    this.status = Boolean(o.status === 'Y');
     this.getPermission(this.profile.email);
     this.modalOfficer = true;
   }
