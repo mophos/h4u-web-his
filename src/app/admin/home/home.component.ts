@@ -78,15 +78,19 @@ export class HomeComponent implements OnInit {
           const _dateServ = moment(w.date_serv).format('YYYY-MM-DD');
           const rs: any = await this.homeService.getService(w.hn, _dateServ, w.request_id, w.uid);
           if (rs.ok) {
-            await this.homeService.sendService(rs.rows);
+            if (rs.rows) {
+              await this.homeService.sendService(rs.rows);
+            } else {
+              await this.homeService.noData(w.request_id);
+            }
           } else {
-            await this.homeService.noData(w.request_id);
+            console.log(rs.error);
+            this.alertService.error(rs.error.message);
           }
           this.getDetail('waiting');
           this.openLoading = false;
         } else {
           this.openLoading = false;
-          console.log('exit');
         }
       }).catch(error => {
         this.openLoading = false;

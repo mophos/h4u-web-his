@@ -18,6 +18,7 @@ export class LayoutComponent implements OnInit {
   menuNrefer = false;
   menuIS = false;
   menuQueue = false;
+  menuConsent = false;
   decoded: any;
   constructor(
     private router: Router,
@@ -42,6 +43,11 @@ export class LayoutComponent implements OnInit {
       const idx002 = _.findIndex(this.decoded.permissions, ['permission_code', '002']); {
         if (idx002 > -1) {
           this.menuH4U = true;
+        }
+      }
+      const idx003 = _.findIndex(this.decoded.permissions, ['permission_code', '001']); {
+        if (idx003 > -1) {
+          this.menuConsent = true;
         }
       }
       const idx004 = _.findIndex(this.decoded.permissions, ['permission_code', '004']); {
@@ -69,11 +75,8 @@ export class LayoutComponent implements OnInit {
 
   async testenv() {
     const rs: any = await this.serviceService.testenv();
-    if (rs.ok) {
-      console.log(rs.rows);
-    } else {
+    if (!rs.ok) {
       console.log(rs.error);
-
     }
   }
 

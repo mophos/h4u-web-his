@@ -1,5 +1,5 @@
 <div>
-  <div class="row" *ngIf="profile">
+  <div class="row dashed" *ngIf="profile">
     <div class="col-md-2">ข้อมูลจากระบบ HIS</div>
     <div class="col-md-2">{{_hn}}
       <clr-icon *ngIf="_hn != hn" style="color: yellow" shape="warning-standard"></clr-icon>
@@ -11,11 +11,41 @@
     </div>
     <div class="col-md-2">
       {{_firstName}} {{_lastName}}
-      <clr-icon *ngIf="_firstName !== firstName || _lastName !== lastName" style="color: yellow" shape="warning-standard"></clr-icon>
-      <clr-icon *ngIf="_firstName === firstName && _lastName === lastName" style="color: green" shape="check"></clr-icon>
+      <clr-icon *ngIf="_firstName !== firstName || _lastName !== lastName" style="color: yellow"
+        shape="warning-standard"></clr-icon>
+      <clr-icon *ngIf="_firstName === firstName && _lastName === lastName" style="color: green" shape="check">
+      </clr-icon>
     </div>
   </div>
-  <clr-datagrid>
+  <div class="row">
+    <div class="col-md-3 dashed">Diagnosis</div>
+    <div class="col-md-3 dashed">Drug</div>
+    <div class="col-md-3 dashed">Procedure</div>
+    <div class="col-md-3 dashed">Lab</div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 dashed">
+      <div class="span" *ngFor="let item of detail.diagnosis">
+        {{item.icd_code}} : {{item.icd_name}}
+      </div>
+    </div>
+    <div class="col-md-3 dashed">
+      <div class="span" *ngFor="let item of detail.drugs">
+        {{item.drug_name}} , {{item.qty}} {{item.unit}}
+      </div>
+    </div>
+    <div class="col-md-3 dashed">
+      <div class="span" *ngFor="let item of detail.procedure">
+        {{item.procedure_code}} : {{item.procedure_name}} {{item.unit}}
+      </div>
+    </div>
+    <div class="col-md-3 dashed">
+      <div class="span" *ngFor="let item of detail.lab">
+        {{item.lab_name}} : {{item.lab_result}}
+      </div>
+    </div>
+  </div>
+  <!-- <clr-datagrid>
     <clr-dg-placeholder>ไม่มีข้อมูลการรับบริการ!</clr-dg-placeholder>
     <clr-dg-row *ngFor="let s of detail.diagnosis">
       <clr-dg-cell>{{s.date_serv | toThaiDate}}</clr-dg-cell>
@@ -25,7 +55,7 @@
       <clr-dg-cell>
       </clr-dg-cell>
     </clr-dg-row>
-  </clr-datagrid>
+  </clr-datagrid> -->
 </div>
 <clr-modal [(clrModalOpen)]="openLoading" [clrModalClosable]="false">
   <h3 class="modal-title">ประมวลผล</h3>

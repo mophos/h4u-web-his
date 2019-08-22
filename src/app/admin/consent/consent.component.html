@@ -1,0 +1,269 @@
+<div class="row">
+  <div class="col-md-6 form-group" style="padding-top: 12px">
+    ค้นหา :
+    <input class="form-control" (keyup)="doEnter($event)" type="text" name="query" [(ngModel)]="query" id=""
+      placeholder=" Enter เพื่อค้นหา">
+  </div>
+  <div class="col-md-6" style="text-align:right">
+    <button class="btn btn-success btn-sm" (click)="openModal()"> บันทึก Consent</button>
+  </div>
+</div>
+<clr-datagrid style="height: 90%;">
+  <clr-dg-column [style.width.%]="5">ตรวจสอบ</clr-dg-column>
+  <clr-dg-column>เลขบัตรประชาชน</clr-dg-column>
+  <clr-dg-column>ชื่อ-สกุล</clr-dg-column>
+  <clr-dg-column>เบอร์โทร</clr-dg-column>
+  <clr-dg-column>ไฟล์</clr-dg-column>
+  <clr-dg-column></clr-dg-column>
+  <clr-dg-placeholder>ไม่พบข้อมูล!</clr-dg-placeholder>
+
+  <clr-dg-row *clrDgItems="let w of list" [clrDgItem]="w">
+    <!-- <app-detail-request [details]="w" *clrIfExpanded ngProjectAs="clr-dg-row-detail"></app-detail-request> -->
+    <clr-dg-cell>
+      <clr-icon *ngIf="w.verify == 1" shape="shield-check" style="color:greenyellow" size="25"> </clr-icon>
+      <clr-icon *ngIf="w.verify == 0" shape="times-circle" style="color:red" size="25"></clr-icon>
+    </clr-dg-cell>
+    <clr-dg-cell>{{w.cid}}</clr-dg-cell>
+    <clr-dg-cell>{{w.fname}} {{w.lname}}</clr-dg-cell>
+    <clr-dg-cell>{{w.tel}}</clr-dg-cell>
+    <clr-dg-cell class="text-center" *ngIf="w.verify != 0">
+      <div class="btn-group" *ngIf="w.image">
+        <button class="btn btn-sm btn-primary-outline btn-icon" (click)="showImage(w.id,w.cid)">
+          <clr-icon shape="picture"></clr-icon>
+        </button>
+      </div>
+      <div *ngIf="!w.image">
+        กรุณาอัพโหลดรูป
+        <button class="btn btn-sm btn-success-outline btn-icon" (click)="onClickOpenModalUpload(w)">
+          <clr-icon shape="upload"></clr-icon>
+        </button>
+
+      </div>
+    </clr-dg-cell>
+    <clr-dg-cell class="text-center" *ngIf="w.verify == 0">
+      <div class="btn-group" *ngIf="w.image">
+        <button class="btn btn-sm btn-primary-outline btn-icon" (click)="showImage(w.id,w.cid)">
+          <clr-icon shape="picture"></clr-icon>
+        </button>
+        <!-- <div > -->
+
+        <button class="btn btn-sm btn-success-outline btn-icon" (click)="onClickOpenModalUpload(w)">
+          <clr-icon shape="upload"></clr-icon>กรุณาอัพโหลดรูป
+        </button>
+
+        <!-- </div> -->
+      </div>
+
+    </clr-dg-cell>
+    <clr-dg-cell>
+      <div class="btn-group">
+        <!-- <button (click)="onClickEdit(w)" class="btn btn-sm btn-success-outline">แก้ไข</button> -->
+        <button class="btn btn-sm btn-success-outline" (click)="onClickEditTel(w)">แก้ไขเบอร์</button>
+        <button class="btn btn-sm btn-secondary-outline" (click)="onClickEditParent(w)">แก้ไขผู้ปกครอง
+        </button>
+      </div>
+    </clr-dg-cell>
+  </clr-dg-row>
+
+  <clr-dg-footer>
+    {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} จาก {{pagination.totalItems}} รายการ
+    <clr-dg-pagination #pagination [clrDgPageSize]="perPage"></clr-dg-pagination>
+  </clr-dg-footer>
+</clr-datagrid>
+
+
+
+<clr-modal [(clrModalOpen)]="modal" [clrModalClosable]="false">
+  <h3 class="modal-title">บันทึก Consent form</h3>
+  <div class="modal-body" style="height:500px">
+    <div class="row">
+      <div class="col-md-4">รหัสบัตรประชาชน <span class="required">*</span></div>
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-8">
+            <input [disabled]="isUpdate" type="text" maxlength="13" appNumberOnly style="width: 100%"
+              class="form-control" name="cid" [(ngModel)]="cid" (keyup)="onKeyCid($event)">
+          </div>
+          <div class="col-md-4">
+            <button class="btn btn-sm btn-success" (click)="readSmartcard()">อ่านข้อมูล</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-top: .5rem">
+      <div class="col-md-4">ชื่อ <span class="required">*</span></div>
+      <div class="col-md-8">
+        <input [disabled]="isUpdate" type="text" style="width: 100%" class="form-control" name="fname"
+          [(ngModel)]="fname">
+      </div>
+    </div>
+    <div class="row" style="margin-top: .5rem">
+      <div class="col-md-4">นามสกุล <span class="required">*</span></div>
+      <div class="col-md-8">
+        <input [disabled]="isUpdate" type="text" style="width: 100%" class="form-control" name="lname"
+          [(ngModel)]="lname">
+      </div>
+    </div>
+    <div class="row" style="margin-top: .5rem">
+      <div class="col-md-4">เบอร์โทรศัพท์ <span class="required">*</span>
+      </div>
+      <div class="col-md-8">
+        <input type="text" maxlength="10" appNumberOnly style="width: 100%" class="form-control" name="tel"
+          [(ngModel)]="tel">
+      </div>
+    </div>
+    <div class="row" style="margin-top: .5rem">
+      <div class="col-md-4">วันเดือนปีเกิด <span class="required">*</span></div>
+      <div class="col-md-8">
+        <div style="width: 80%">
+          <my-date-picker-th [disabled]="isUpdate" name="birthdate" [options]="myDatePickerOptions"
+            [(ngModel)]="birthdate" required>
+          </my-date-picker-th>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-top: .5rem">
+      <div class="col-md-4">ยินยอมให้ผู้อื่นดูข้อมูล </div>
+      <div class="col-md-8">
+        <div style="width: 80%">
+          <input type="checkbox" name="checkParent" id="" [(ngModel)]="checkParent" (change)="onClickCheckParent()">
+        </div>
+      </div>
+    </div>
+    <div *ngIf="checkParent">
+      <div class="row" style="margin-top: .5rem" *ngFor="let i of parents;let idx = index">
+        <div class="col-md-4">รหัสบัตรประชาชน </div>
+        <div class="col-md-6">
+          <input type="text" maxlength="13" #cid appNumberOnly style="width: 100%" class="form-control" id="idx-{{idx}}"
+            name="idx-{{idx}}" (keyup)="onKeyParent(i.id,cid)">
+        </div>
+        <div class="col-md-2">
+          <clr-icon shape="plus" (click)="addParent()"></clr-icon>
+          <clr-icon shape="minus" (click)="removeParent(i.id)" *ngIf="idx >= 1"></clr-icon>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 2rem">
+      <div class="col-md-12 text-center">
+        <label class="btn btn-primary" style="width: 100%">
+          <input type="file" #file accept="image/jpeg,image/jpg,image/png" style="display: none;"
+            (change)="fileChangeEvent($event)">
+          อัพโหลดเอกสาร jpg,png
+        </label>
+      </div>
+      <div class="col-md-12 text-center">
+        <button class="btn btn-primary" (click)="openModalWebcam()" style="width: 100%">จับภาพเอกสารด้วย webcam</button>
+      </div>
+      <div class="col-md-12 text-center">
+        <img *ngIf="(isWebcam || isUpload) && imageBase64" style="width:80%" [src]="imageBase64" alt="">
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-success" [disabled]="!cid || !fname || !lname || !birthdate || !tel || isSave"
+      (click)="save()">บันทึก</button>
+    <button class="btn btn-danger" (click)="modal = false">ปิด</button>
+  </div>
+</clr-modal>
+
+
+<clr-modal [(clrModalOpen)]="modalWebcam" [clrModalClosable]="false" [clrModalSize]="'lg'">
+  <h3 class="modal-title">บันทึก Consent form</h3>
+  <div class="modal-body" style="height:400px">
+    <webcam *ngIf="showWebcam" [trigger]="triggerObservable()" [imageQuality]="'1'" (imageCapture)="handleImage($event)"
+      (initError)="handleInitError($event)"></webcam>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-success" (click)="capture()">บันทึก</button>
+    <button class="btn btn-danger" (click)="modalWebcam = false;showWebcam = false">ปิด</button>
+  </div>
+</clr-modal>
+
+<clr-modal [(clrModalOpen)]="modalTel" [clrModalClosable]="false">
+  <h3 class="modal-title">แก้ไขเบอร์โทรศัพท์</h3>
+  <div class="modal-body">
+    <div class="row" style="margin-top: .5rem">
+      <div class="col-md-4">ชื่อ
+      </div>
+      <div class="col-md-8">
+        {{fname}} {{lname}}
+      </div>
+      <div class="col-md-4">เบอร์โทรศัพท์ (เดิม)
+      </div>
+      <div class="col-md-8">
+        {{tel}}
+      </div>
+      <div class="col-md-4">เบอร์โทรศัพท์ (ใหม่)
+      </div>
+      <div class="col-md-8">
+        <input type="text" maxlength="10" appNumberOnly style="width: 100%" class="form-control" name="tel"
+          [(ngModel)]="editTel">
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-success" [disabled]="!editTel" (click)="onClickSaveTel()">บันทึก</button>
+    <button class="btn btn-danger" (click)="modalTel = false">ปิด</button>
+  </div>
+</clr-modal>
+
+<clr-modal [(clrModalOpen)]="modalParent" [clrModalClosable]="false">
+  <h3 class="modal-title">แก้ไขเบอร์โทรศัพท์</h3>
+  <div class="modal-body">
+    <div class="row" style="margin-top: .5rem">
+      <div class="col-md-4">ยินยอมให้ผู้อื่นดูข้อมูล </div>
+      <div class="col-md-8">
+        <div style="width: 80%">
+          <input type="checkbox" name="checkParent" id="" [(ngModel)]="checkParent" (change)="onClickCheckParent()">
+        </div>
+      </div>
+    </div>
+    <div *ngIf="checkParent">
+      <div class="row" style="margin-top: .5rem" *ngFor="let i of parents;let idx = index">
+        <div class="col-md-4">รหัสบัตรประชาชน </div>
+        <div class="col-md-6">
+          <input type="text" maxlength="13" #cid appNumberOnly style="width: 100%" class="form-control" id="idx-{{idx}}"
+            name="idx-{{idx}}" (keyup)="onKeyParent(i.id,cid)" [value]="i.cid">
+        </div>
+        <div class="col-md-2">
+          <clr-icon shape="plus" (click)="addParent()"></clr-icon>
+          <clr-icon shape="minus" (click)="removeParent(i.id)" *ngIf="idx >= 1"></clr-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-success" (click)="onClickSaveParent()">บันทึก</button>
+    <button class="btn btn-danger" (click)="modalParent = false">ปิด</button>
+  </div>
+</clr-modal>
+
+<clr-modal [(clrModalOpen)]="modalImage" [clrModalSize]="'lg'">
+  <div class="modal-body text-center">
+    <img [src]="imageBase64" alt="" style="width:100%">
+  </div>
+</clr-modal>
+
+<clr-modal [(clrModalOpen)]="modalUploadImage">
+  <div class="modal-body text-center">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <label class="btn btn-primary" style="width: 100%">
+          <input type="file" #file accept="image/jpeg,image/jpg,image/png" style="display: none;"
+            (change)="fileChangeEvent($event)">
+          อัพโหลดเอกสาร jpg,png
+        </label>
+      </div>
+      <div class="col-md-12 text-center">
+        <button class="btn btn-primary" (click)="openModalWebcam()" style="width: 100%">จับภาพเอกสารด้วย webcam</button>
+      </div>
+      <div class="col-md-12 text-center">
+        <img *ngIf="(isWebcam || isUpload) && imageBase64" style="width:80%" [src]="imageBase64" alt="">
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-success" (click)="doUploadImage()" [disabled]="isSave">บันทึก</button>
+    <button class="btn btn-danger" (click)="modalUploadImage = false">ปิด</button>
+  </div>
+</clr-modal>

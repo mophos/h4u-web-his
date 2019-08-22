@@ -1,3 +1,4 @@
+import { ConsentComponent } from './consent/consent.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
@@ -17,27 +18,14 @@ const routes: Routes = [
     component: LayoutComponent,
     canActivate: [AuthGuardService],
     children: [
-      {
-        path: '', redirectTo: 'home', pathMatch: 'full'
-      },
-      {
-        path: 'dashboard', component: DashboardComponent
-      },
-      {
-        path: 'home', component: HomeComponent
-      },
-      {
-        path: 'profile', component: ProfileComponent
-      },
-      {
-        path: 'nrefer', component: NreferComponent
-      },
-      {
-        path: 'is', component: IsOnlineComponent
-      },
-      {
-        path: 'queue', component: QueueComponent
-      }
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: 'dashboard', component: DashboardComponent },
+      { path: 'home', component: HomeComponent },
+      { path: 'profile', component: ProfileComponent },
+      { path: 'nrefer', component: NreferComponent },
+      { path: 'is', component: IsOnlineComponent },
+      { path: 'queue', component: QueueComponent },
+      { path: 'consent', component: ConsentComponent }
     ]
   },
   {
@@ -45,12 +33,8 @@ const routes: Routes = [
     component: LayoutComponent,
     canActivate: [ManagerGuard],
     children: [
-      {
-        path: '', redirectTo: 'officer', pathMatch: 'full'
-      },
-      {
-        path: 'officer', component: OfficerComponent
-      }
+      { path: '', redirectTo: 'officer', pathMatch: 'full' },
+      { path: 'officer', component: OfficerComponent }
     ]
   }
 ];

@@ -19,7 +19,7 @@ export class OfficerComponent implements OnInit {
   modalOfficer = false;
   status = false;
   query: string;
-  filterStatus = 'W';
+  filterStatus = 'A';
   perPage = 20;
   profile: any = {};
   permissions: any = [];

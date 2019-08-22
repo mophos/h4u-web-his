@@ -1,3 +1,4 @@
+import { ConsentService } from './../services/consent.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ClarityModule } from 'clarity-angular';
@@ -22,6 +23,11 @@ import { DirectivesModule } from '../directives/directives.module';
 import { NreferComponent } from './nrefer/nrefer.component';
 import { IsOnlineComponent } from './is-online/is-online.component';
 import { QueueComponent } from './queue/queue.component';
+import { ConsentComponent } from './consent/consent.component';
+import { MyDatePickerTHModule } from 'mydatepicker-th';
+import { PipeModule } from '../pipe/pipe.module';
+import { WebcamModule } from 'ngx-webcam';
+
 
 @NgModule({
   imports: [
@@ -29,9 +35,18 @@ import { QueueComponent } from './queue/queue.component';
     FormsModule,
     AdminRoutingModule,
     ClarityModule,
-    DirectivesModule
+    DirectivesModule,
+    MyDatePickerTHModule,
+    PipeModule,
+    WebcamModule
   ],
-  providers: [HomeService, AuthGuardService, AlertService, ServiceService],
+  providers: [
+    HomeService,
+    AuthGuardService,
+    AlertService,
+    ServiceService,
+    ConsentService
+  ],
   declarations: [
     LayoutComponent,
     DashboardComponent,
@@ -44,7 +59,8 @@ import { QueueComponent } from './queue/queue.component';
     ProfileComponent,
     NreferComponent,
     IsOnlineComponent,
-    QueueComponent
+    QueueComponent,
+    ConsentComponent
   ],
   exports: [
     DetailRequestComponent
