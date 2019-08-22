@@ -263,19 +263,29 @@ export class ConsentComponent implements OnInit {
     this.modal = false;
     this.modalWebcam = true;
     this.showWebcam = true;
+    this.modalUploadImage = false;
   }
 
   capture() {
     this.trigger.next();
   }
 
-  handleImage(e) {
-    this.isWebcam = true;
-    this.imageTypeBase64 = e._mimeType;
-    this.imageBase64 = e.imageAsDataUrl;
-    this.modalWebcam = false;
-    this.showWebcam = false;
-    this.modal = true;
+  async handleImage(e) {
+    try {
+      this.isWebcam = true;
+      this.imageTypeBase64 = e._mimeType;
+      this.imageBase64 = e.imageAsDataUrl;
+      this.modalWebcam = false;
+      this.showWebcam = false;
+      if (this.isUpdate) {
+        this.modalUploadImage = true;
+      } else {
+        this.modal = true;
+      }
+    } catch (error) {
+      console.log(error);
+
+    }
   }
 
   handleInitError(e) {
@@ -348,6 +358,7 @@ export class ConsentComponent implements OnInit {
   }
 
   onClickOpenModalUpload(w) {
+    this.isUpdate = true;
     this.imageBase64 = null;
     this.userId = w.id;
     this.cid = w.cid;
@@ -459,5 +470,46 @@ export class ConsentComponent implements OnInit {
         this.lname = rs.rows.lname;
       }
     }
+  }
+
+  checkID() {
+    const id = this.cid;
+    if (id.length !== 13) {
+      return false;
+    } else {
+      let sum = 0;
+      for (let i = 0; i < 12; i++) {
+        sum += parseFloat(id.charAt(i)) * (13 - i);
+      }
+      if ((11 - sum % 11) % 10 !== parseFloat(id.charAt(12))) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }
+
+  checkCIDParent() {
+    let error = false;
+    if (this.checkParent) {
+      for (const p of this.parents) {
+        if (p.cid.length !== 13) {
+          error = true;
+        } else {
+          let sum = 0;
+          for (let i = 0; i < 12; i++) {
+            sum += parseFloat(p.cid.charAt(i)) * (13 - i);
+          }
+          if ((11 - sum % 11) % 10 !== parseFloat(p.cid.charAt(12))) {
+            error = true;
+          }
+        }
+      }
+    } else {
+      error = false;
+    }
+    console.log(error);
+
+    return error;
   }
 }

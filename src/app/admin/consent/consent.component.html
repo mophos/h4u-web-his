@@ -160,7 +160,8 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-success" [disabled]="!cid || !fname || !lname || !birthdate || !tel || isSave"
+    <button class="btn btn-success"
+      [disabled]="!cid || !fname || !lname || !birthdate || !tel || isSave||!checkID() || checkCIDParent()"
       (click)="save()">บันทึก</button>
     <button class="btn btn-danger" (click)="modal = false">ปิด</button>
   </div>
