@@ -11,8 +11,8 @@ export class ServiceService {
     private authHttp: AuthHttp
   ) { }
 
-  async getService(hn, dateServe, requestId, registerId) {
-    const url = `${this.apiUrl}/services/view/${requestId}/${registerId}?hn=${hn}&dateServe=${dateServe}`;
+  async getService(hn, dateServ, requestId, registerId) {
+    const url = `${this.apiUrl}/services/view/${requestId}/${registerId}?hn=${hn}&dateServ=${dateServ}`;
     const rs: any = await this.authHttp.get(url).toPromise();
     console.log(rs);
     return rs.json();
