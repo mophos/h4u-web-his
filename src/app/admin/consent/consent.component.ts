@@ -239,7 +239,7 @@ export class ConsentComponent implements OnInit {
         obj.parent = this.parents;
       }
       if (this.isWebcam || this.isUpload) {
-        obj.imageBase64 = this.imageBase64;
+        obj.imageBase64 = this.resizeImage(this.imageBase64);
         // obj.image_type = this.imageTypeBase64;
       } else {
         obj.imageBase64 = null;
@@ -254,6 +254,8 @@ export class ConsentComponent implements OnInit {
       }
       this.isSave = false;
     } catch (error) {
+      console.log(error);
+
       this.isSave = false;
       this.alertService.error(error);
     }
@@ -299,6 +301,7 @@ export class ConsentComponent implements OnInit {
   async fileChangeEvent(fileInput: any) {
 
     const file = <File>fileInput.target.files[0];
+    console.log(file);
     if (file) {
       this.imageTypeBase64 = file.type;
 
@@ -458,7 +461,7 @@ export class ConsentComponent implements OnInit {
   async onKeyCid(e) {
     if (this.cid.length === 13) {
       const rs: any = await this.consentService.getSmarthealth(this.cid);
-      if (rs.ok) {
+      if (rs.status !== 500) {
         this.birthdate = {
           date: {
             year: moment(rs.rows.birth, 'YYYY-MM-DD').get('year'),
@@ -508,8 +511,6 @@ export class ConsentComponent implements OnInit {
     } else {
       error = false;
     }
-    console.log(error);
-
     return error;
   }
 }

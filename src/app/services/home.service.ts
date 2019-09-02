@@ -27,7 +27,7 @@ export class HomeService {
 
 
   async getService(hn, dateServe, requestId, registerId) {
-    const url = `${this.apiUrl}/services/view/${hn}/${dateServe}/${requestId}/${registerId}`;
+    const url = `${this.apiUrl}/services/view/${requestId}/${registerId}?hn=${hn}&dateServe=${dateServe}`;
     const rs: any = await this.authHttp.get(url).toPromise();
     return rs.json();
   }
