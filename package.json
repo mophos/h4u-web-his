@@ -31,7 +31,7 @@
     "clarity-ui": "^0.10.19",
     "classlist.js": "^1.1.20150312",
     "core-js": "^2.4.1",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.19",
     "moment": "^2.20.1",
     "mydatepicker-th": "^0.1.1",
     "ngx-webcam": "^0.2.5",
